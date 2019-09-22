@@ -40,7 +40,12 @@ func (_ LongAlgebraicNotation) String() string {
 
 // Encode implements the Encoder interface.
 func (_ LongAlgebraicNotation) Encode(pos *Position, m *Move) string {
-	return m.S1().String() + m.S2().String() + m.Promo().String() + m.Comment
+	commentStr := ""
+	if m.Comment != "" {
+		commentStr = " " + m.Comment
+	}
+
+	return m.S1().String() + m.S2().String() + m.Promo().String() + commentStr
 }
 
 // Decode implements the Decoder interface.
@@ -98,11 +103,15 @@ func (_ AlgebraicNotation) String() string {
 
 // Encode implements the Encoder interface.
 func (_ AlgebraicNotation) Encode(pos *Position, m *Move) string {
+	commentStr := ""
+	if m.Comment != "" {
+		commentStr = " " + m.Comment
+	}
 	checkChar := getCheckChar(pos, m)
 	if m.HasTag(KingSideCastle) {
-		return "O-O" + checkChar + " " + m.Comment
+		return "O-O" + checkChar + commentStr
 	} else if m.HasTag(QueenSideCastle) {
-		return "O-O-O" + checkChar + " " + m.Comment
+		return "O-O-O" + checkChar + commentStr
 	}
 	p := pos.Board().Piece(m.S1())
 	pChar := charFromPieceType(p.Type())
@@ -115,7 +124,7 @@ func (_ AlgebraicNotation) Encode(pos *Position, m *Move) string {
 		}
 	}
 	promoText := charForPromo(m.promo)
-	return pChar + s1Str + capChar + m.s2.String() + promoText + checkChar + " " + m.Comment
+	return pChar + s1Str + capChar + m.s2.String() + promoText + checkChar + commentStr
 }
 
 // Decode implements the Decoder interface.
