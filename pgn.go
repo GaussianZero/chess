@@ -115,12 +115,15 @@ var (
 )
 
 func moveList(pgn string) ([]string, Outcome) {
-	// remove comments
-	text := removeSection("{", "}", pgn)
+	// keep comments
+	//text := removeSection("{", "}", pgn)
+
 	// remove variations
-	text = removeSection(`\(`, `\)`, text)
+	text := removeSection(`\(`, `\)`, pgn)
+
 	// remove tag pairs
-	text = removeSection(`\[`, `\]`, text)
+	text = removeTagPairs(text)
+	
 	// remove line breaks
 	text = strings.Replace(text, "\n", " ", -1)
 
@@ -141,6 +144,11 @@ func moveList(pgn string) ([]string, Outcome) {
 		}
 	}
 	return filtered, outcome
+}
+
+func removeTagPairs(s string) string {
+	r := regexp.MustCompile("^\\[.*?\\]$")
+	return r.ReplaceAllString(s, "")
 }
 
 func removeSection(leftChar, rightChar, s string) string {
