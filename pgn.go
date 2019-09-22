@@ -149,8 +149,10 @@ func removeSection(leftChar, rightChar, s string) string {
 	for {
 		i := r.FindStringIndex(s)
 		if i == nil {
+			log.Printf("returning...\n")
 			return s
 		}
+		log.Printf("removing comment...\n")
 		s = s[0:i[0]] + s[i[1]:len(s)]
 	}
 }
