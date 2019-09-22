@@ -19,7 +19,6 @@ func GamesFromPGN(r io.Reader) ([]*Game, error) {
 	count := 0
 	totalCount := 0
 	br := bufio.NewReader(r)
-	fmt.Println("Attempting to process all games", totalCount)
 	for {
 		line, err := br.ReadString('\n')
 		if err == io.EOF {
@@ -42,10 +41,8 @@ func GamesFromPGN(r io.Reader) ([]*Game, error) {
 			current = ""
 			totalCount++
 			log.Println("Processed game", totalCount)
-			fmt.Println("Processed game", totalCount)
 		}
 	}
-	fmt.Println("Processed all games", totalCount)
 	return games, nil
 }
 
@@ -160,7 +157,6 @@ func moveList(pgn string) ([]string, Outcome) {
 	// remove line breaks
 	text = strings.Replace(text, "\n", " ", -1)
 
-	fmt.Println("parsing text ", text)
 	
 	list := strings.Split(text, " ")
 	filtered := []string{}
@@ -179,7 +175,6 @@ func moveList(pgn string) ([]string, Outcome) {
 		}
 	}
 
-	log.Println("Outcome is %v", outcome)
 	return filtered, outcome
 }
 
@@ -189,15 +184,12 @@ func removeTagPairs(s string) string {
 }
 
 func removeSection(leftChar, rightChar, s string) string {
-	log.Printf("Checking %s for %s...%s\n", s, leftChar, rightChar)
 	r := regexp.MustCompile(leftChar + ".*?" + rightChar)
 	for {
 		i := r.FindStringIndex(s)
 		if i == nil {
-			log.Printf("returning...\n")
 			return s
 		}
-		log.Printf("removing comment...\n")
 		s = s[0:i[0]] + s[i[1]:len(s)]
 	}
 }

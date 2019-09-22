@@ -2,7 +2,6 @@ package chess
 
 import (
 	"strings"
-	"fmt"
 )
 
 // A MoveTag represents a notable consequence of a move.
@@ -36,7 +35,6 @@ type Move struct {
 // String returns a string useful for debugging.  String doesn't return
 // algebraic notation.
 func (m *Move) String() string {
-	fmt.Println("Hello inside move string")
 	result := m.s1.String() + m.s2.String() + m.promo.String()
 	result = strings.Replace(result, "=", "", -1)
 	return result + m.Comment
