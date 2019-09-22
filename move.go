@@ -31,7 +31,7 @@ type Move struct {
 // String returns a string useful for debugging.  String doesn't return
 // algebraic notation.
 func (m *Move) String() string {
-	return m.s1.String() + m.s2.String() + m.promo.String()
+	return m.s1.String() + m.s2.String() + m.promo.String() + m.Comment
 }
 
 // S1 returns the origin square of the move.
