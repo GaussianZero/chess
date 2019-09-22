@@ -120,12 +120,12 @@ func (_ AlgebraicNotation) Encode(pos *Position, m *Move) string {
 
 // Decode implements the Decoder interface.
 func (_ AlgebraicNotation) Decode(pos *Position, s string) (*Move, error) {
-	s = removeSubstrings(s, "?", "!", "+", "#", "e.p.")
+	s = removeSubstrings(s, "?", "!", "+", "#", "e.p.", "=")
 	fmt.Println("Starting from fen ", pos.String())
 	fmt.Println("Checking string ", s)
 	for _, m := range pos.ValidMoves() {
 		str := AlgebraicNotation{}.Encode(pos, m)
-		str = removeSubstrings(str, "?", "!", "+", "#", "e.p.")
+		str = removeSubstrings(str, "?", "!", "+", "#", "e.p.", "=")
 		fmt.Println("Valid move ", m)
 		fmt.Println("Checking equality... ", str, s)
 		if str == s {
