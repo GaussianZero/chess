@@ -124,6 +124,7 @@ func (_ AlgebraicNotation) Decode(pos *Position, s string) (*Move, error) {
 	for _, m := range pos.ValidMoves() {
 		str := AlgebraicNotation{}.Encode(pos, m)
 		str = removeSubstrings(str, "?", "!", "+", "#", "e.p.")
+		fmt.Println("Valid move ", m)
 		if str == s {
 			return m, nil
 		}
