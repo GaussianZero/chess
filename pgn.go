@@ -87,12 +87,14 @@ func decodePGN(pgn string) (*Game, error) {
 		}
 		
 		m, err := notation.Decode(g.Position(), alg)
+		
 		if err != nil {
 			return nil, fmt.Errorf("chess: pgn decode error %s on move %d", err.Error(), g.Position().moveCount)
 		}
 		if err := g.Move(m); err != nil {
 			return nil, fmt.Errorf("chess: pgn invalid move error %s on move %d", err.Error(), g.Position().moveCount)
 		}
+		prevMove = m
 	}
 	g.outcome = outcome
 	return g, nil
