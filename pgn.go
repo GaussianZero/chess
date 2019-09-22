@@ -86,6 +86,7 @@ func decodePGN(pgn string) (*Game, error) {
 				return nil, fmt.Errorf("chess: pgn decode error %s malformed comment")
 			}
 			prevMove.Comment = comment
+			commentStrs = []string{}
 			continue
 		}
 		
