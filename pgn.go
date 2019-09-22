@@ -147,7 +147,7 @@ func moveList(pgn string) ([]string, Outcome) {
 }
 
 func removeTagPairs(s string) string {
-	r := regexp.MustCompile("^\\[.*?\\]$")
+	r := regexp.MustCompile("\\[.*?\\]")
 	return r.ReplaceAllString(s, "")
 }
 
