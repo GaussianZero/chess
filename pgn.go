@@ -19,6 +19,7 @@ func GamesFromPGN(r io.Reader) ([]*Game, error) {
 	count := 0
 	totalCount := 0
 	br := bufio.NewReader(r)
+	fmt.Println("Attempting to process all games", totalCount)
 	for {
 		line, err := br.ReadString('\n')
 		if err == io.EOF {
