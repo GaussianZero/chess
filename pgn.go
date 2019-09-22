@@ -144,6 +144,7 @@ func moveList(pgn string) ([]string, Outcome) {
 }
 
 func removeSection(leftChar, rightChar, s string) string {
+	log.Printf("Checking %s for %s...%s\n", s, leftChar, rightChar)
 	r := regexp.MustCompile(leftChar + ".*?" + rightChar)
 	for {
 		i := r.FindStringIndex(s)
