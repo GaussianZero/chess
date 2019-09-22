@@ -58,7 +58,34 @@ func decodePGN(pgn string) (*Game, error) {
 			notation = LongAlgebraicNotation{}
 		}
 	}
+
+	var prevMove *Move
+	isComment := false
+	commentStrs := []string{}
+	
 	for _, alg := range moveStrs {
+		if strings.Contains(alg, "{") {
+			isComment = true
+			commentStrs = append(commentStrs, alg)
+			continue
+		}
+		
+		if isComment {
+			if !strings.Contains(alg, "}") {
+				commentStrs = append(commentStrs, alg)
+				continue
+			}
+			// end of the comment
+			commentStrs = append(commentStrs, alg)
+			comment := strings.Join(commentStrs, " ")
+			isComment = false
+			if prevMove == nil {
+				return nil, fmt.Errorf("chess: pgn decode error %s malformed comment")
+			}
+			prevMove.Comment = comment
+			continue
+		}
+		
 		m, err := notation.Decode(g.Position(), alg)
 		if err != nil {
 			return nil, fmt.Errorf("chess: pgn decode error %s on move %d", err.Error(), g.Position().moveCount)

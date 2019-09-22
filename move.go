@@ -25,6 +25,7 @@ type Move struct {
 	s2    Square
 	promo PieceType
 	tags  MoveTag
+	Comment string
 }
 
 // String returns a string useful for debugging.  String doesn't return
