@@ -174,6 +174,8 @@ func moveList(pgn string) ([]string, Outcome) {
 			}
 		}
 	}
+
+	log.Println("Outcome is %v", outcome)
 	return filtered, outcome
 }
 
