@@ -127,6 +127,8 @@ func moveList(pgn string) ([]string, Outcome) {
 	// remove line breaks
 	text = strings.Replace(text, "\n", " ", -1)
 
+	fmt.Println("parsing text ", text)
+	
 	list := strings.Split(text, " ")
 	filtered := []string{}
 	var outcome Outcome
