@@ -1,5 +1,9 @@
 package chess
 
+import (
+	"strings"
+)
+
 // A MoveTag represents a notable consequence of a move.
 type MoveTag uint16
 
@@ -31,7 +35,10 @@ type Move struct {
 // String returns a string useful for debugging.  String doesn't return
 // algebraic notation.
 func (m *Move) String() string {
-	return m.s1.String() + m.s2.String() + m.promo.String() //+ m.Comment
+	result := m.s1.String() + m.s2.String() + m.promo.String()
+	result = strings.Replace(result, "=", "", -1)
+	return result + m.Comment
+
 }
 
 // S1 returns the origin square of the move.
