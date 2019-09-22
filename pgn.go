@@ -41,8 +41,10 @@ func GamesFromPGN(r io.Reader) ([]*Game, error) {
 			current = ""
 			totalCount++
 			log.Println("Processed game", totalCount)
+			fmt.Println("Processed game", totalCount)
 		}
 	}
+	fmt.Println("Processed all games", totalCount)
 	return games, nil
 }
 
