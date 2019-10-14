@@ -50,6 +50,7 @@ type Position struct {
 	moveCount       int
 	inCheck         bool
 	validMoves      []*Move
+	validMovesAllowingCheck      []*Move // A.K.A. Invalid Moves
 }
 
 // Update returns a new position resulting from the given move.
@@ -90,6 +91,14 @@ func (pos *Position) ValidMoves() []*Move {
 	}
 	pos.validMoves = engine{}.CalcMoves(pos, false)
 	return append([]*Move(nil), pos.validMoves...)
+}
+
+func (pos *Position) ValidMovesAllowingCheck() []*Move {
+	if pos.validMovesAllowingCheck != nil {
+		return append([]*Move(nil), pos.validMovesAllowingCheck...)
+	}
+	pos.validMovesAllowingCheck = engine{}.CalcMovesAllowingCheck(pos, false)
+	return append([]*Move(nil), pos.validMovesAllowingCheck...)
 }
 
 // Status returns the position's status as one of the outcome methods.
