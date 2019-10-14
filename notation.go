@@ -203,7 +203,7 @@ func formIncorrectS1(pos *Position, m *Move) string {
 	}
 	
 	for _, mv := range moves {
-		fmt.Printf("returning since pawn.%v\n", m)
+		fmt.Printf("returning checking move. %v\n", mv)
 		if mv.s2 == m.s2 && p == pos.board.Piece(mv.s1) {
 			pMoves = append(pMoves, mv)
 			files[mv.s1.File()] = files[mv.s1.File()] + 1
