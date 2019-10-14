@@ -149,6 +149,7 @@ func (_ AlgebraicNotation) IncorrectEncode(pos *Position, m *Move) string {
 		}
 	}
 	promoText := charForPromo(m.promo)
+	fmt.Printf("Returning move str %s\n", pChar + s1Str + capChar + m.s2.String() + promoText + checkChar + commentStr)
 	return pChar + s1Str + capChar + m.s2.String() + promoText + checkChar + commentStr
 }
 
