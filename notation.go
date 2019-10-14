@@ -212,12 +212,16 @@ func formIncorrectS1(pos *Position, m *Move) string {
 		}
 	}
 	if len(pMoves) == 1 {
+		fmt.Printf("[incorrect] lenPmoves = 1..\n")
 		return ""
 	} else if len(files) == len(pMoves) {
+		fmt.Printf("[incorrect] files matched returning s1str %s..\n", m.s1.File().String())
 		return m.s1.File().String()
 	} else if len(ranks) == len(pMoves) {
+		fmt.Printf("[incorrect] ranks matched returning s1str %s..\n", m.s1.Rank().String())
 		return m.s1.Rank().String()
 	}
+	fmt.Printf("[incorrect] nothing matched returning s1str %s..\n", m.s1.String())
 	return m.s1.String()
 }
 
