@@ -168,8 +168,8 @@ func (_ AlgebraicNotation) Decode(pos *Position, s string) (*Move, error) {
 		// Some PGNs have incorrect algebraic notation, let's accept them
 		// so that we can be generous.
 		str2 := AlgebraicNotation{}.IncorrectEncode(pos, m)
+		str2 = removeSubstrings(str2, "?", "!", "+", "#", "e.p.", "=")
 		fmt.Println("Checking valid move with incorrect encoding: %s vs %s", str2, s)
-		str2 = removeSubstrings(str, "?", "!", "+", "#", "e.p.", "=")
 		if str2 == s {
 			return m, nil
 		}
