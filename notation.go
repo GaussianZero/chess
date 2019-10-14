@@ -191,20 +191,21 @@ func getCheckChar(pos *Position, move *Move) string {
 
 func formIncorrectS1(pos *Position, m *Move) string {
 	moves := pos.ValidMovesAllowingCheck()
-	fmt.Printf("forming S1 str for move %v\n", m)
+	fmt.Printf("[incorrect] forming S1 str for move %v\n", m)
 	// find moves for piece type
 	pMoves := []*Move{}
 	files := map[File]int{}
 	ranks := map[Rank]int{}
 	p := pos.board.Piece(m.s1)
 	if p.Type() == Pawn {
-		fmt.Printf("returning since pawn.%v\n", m)
+		fmt.Printf("[incorrect] returning since pawn.%v\n", m)
 		return ""
 	}
 	
 	for _, mv := range moves {
-		fmt.Printf("returning checking move. %v\n", mv)
+		fmt.Printf("[incorrect] checking move. %v\n", mv)
 		if mv.s2 == m.s2 && p == pos.board.Piece(mv.s1) {
+			fmt.Printf("[incorrect] destination matched.. %v\n", mv)
 			pMoves = append(pMoves, mv)
 			files[mv.s1.File()] = files[mv.s1.File()] + 1
 			ranks[mv.s1.Rank()] = ranks[mv.s1.Rank()] + 1
