@@ -155,6 +155,7 @@ func getCheckChar(pos *Position, move *Move) string {
 
 func formS1(pos *Position, m *Move) string {
 	moves := pos.ValidMoves()
+	fmt.Printf("forming S1 str for move %v\n", m)
 	// find moves for piece type
 	pMoves := []*Move{}
 	files := map[File]int{}
@@ -163,6 +164,7 @@ func formS1(pos *Position, m *Move) string {
 	if p.Type() == Pawn {
 		return ""
 	}
+	
 	for _, mv := range moves {
 		if mv.s2 == m.s2 && p == pos.board.Piece(mv.s1) {
 			pMoves = append(pMoves, mv)
