@@ -149,18 +149,15 @@ func (_ AlgebraicNotation) IncorrectEncode(pos *Position, m *Move) string {
 		}
 	}
 	promoText := charForPromo(m.promo)
-	fmt.Printf("Returning move str %s\n", pChar + s1Str + capChar + m.s2.String() + promoText + checkChar + commentStr)
 	return pChar + s1Str + capChar + m.s2.String() + promoText + checkChar + commentStr
 }
 
 // Decode implements the Decoder interface.
 func (_ AlgebraicNotation) Decode(pos *Position, s string) (*Move, error) {
 	s = removeSubstrings(s, "?", "!", "+", "#", "e.p.", "=")
-	fmt.Printf("Checking All valid moves for position %v, %s\n ", pos, s)
 	for _, m := range pos.ValidMoves() {
 		str := AlgebraicNotation{}.Encode(pos, m)
 		str = removeSubstrings(str, "?", "!", "+", "#", "e.p.", "=")
-		fmt.Println("Checking valid move: %s", str)
 		if str == s {
 			return m, nil
 		}
@@ -169,7 +166,6 @@ func (_ AlgebraicNotation) Decode(pos *Position, s string) (*Move, error) {
 		// so that we can be generous.
 		str2 := AlgebraicNotation{}.IncorrectEncode(pos, m)
 		str2 = removeSubstrings(str2, "?", "!", "+", "#", "e.p.", "=")
-		fmt.Println("Checking valid move with incorrect encoding: %s vs %s", str2, s)
 		if str2 == s {
 			return m, nil
 		}
@@ -192,55 +188,44 @@ func getCheckChar(pos *Position, move *Move) string {
 
 func formIncorrectS1(pos *Position, m *Move) string {
 	moves := pos.ValidMovesAllowingCheck()
-	fmt.Printf("[incorrect] forming S1 str for move %v\n", m)
 	// find moves for piece type
 	pMoves := []*Move{}
 	files := map[File]int{}
 	ranks := map[Rank]int{}
 	p := pos.board.Piece(m.s1)
 	if p.Type() == Pawn {
-		fmt.Printf("[incorrect] returning since pawn.%v\n", m)
 		return ""
 	}
 	
 	for _, mv := range moves {
-		fmt.Printf("[incorrect] checking move. %v\n", mv)
 		if mv.s2 == m.s2 && p == pos.board.Piece(mv.s1) {
-			fmt.Printf("[incorrect] destination matched.. %v\n", mv)
 			pMoves = append(pMoves, mv)
 			files[mv.s1.File()] = files[mv.s1.File()] + 1
 			ranks[mv.s1.Rank()] = ranks[mv.s1.Rank()] + 1
 		}
 	}
 	if len(pMoves) == 1 {
-		fmt.Printf("[incorrect] lenPmoves = 1..\n")
 		return ""
 	} else if len(files) == len(pMoves) {
-		fmt.Printf("[incorrect] files matched returning s1str %s..\n", m.s1.File().String())
 		return m.s1.File().String()
 	} else if len(ranks) == len(pMoves) {
-		fmt.Printf("[incorrect] ranks matched returning s1str %s..\n", m.s1.Rank().String())
 		return m.s1.Rank().String()
 	}
-	fmt.Printf("[incorrect] nothing matched returning s1str %s..\n", m.s1.String())
 	return m.s1.String()
 }
 
 func formS1(pos *Position, m *Move) string {
 	moves := pos.ValidMoves()
-	fmt.Printf("forming S1 str for move %v\n", m)
 	// find moves for piece type
 	pMoves := []*Move{}
 	files := map[File]int{}
 	ranks := map[Rank]int{}
 	p := pos.board.Piece(m.s1)
 	if p.Type() == Pawn {
-		fmt.Printf("returning since pawn.%v\n", m)
 		return ""
 	}
 	
 	for _, mv := range moves {
-		fmt.Printf("returning since pawn.%v\n", m)
 		if mv.s2 == m.s2 && p == pos.board.Piece(mv.s1) {
 			pMoves = append(pMoves, mv)
 			files[mv.s1.File()] = files[mv.s1.File()] + 1
