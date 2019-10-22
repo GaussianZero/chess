@@ -1,8 +1,8 @@
 package chess
 
-import (
-	"strings"
-)
+//import (
+//	"strings"
+//)
 
 // A MoveTag represents a notable consequence of a move.
 type MoveTag uint16
@@ -36,7 +36,7 @@ type Move struct {
 // algebraic notation.
 func (m *Move) String() string {
 	result := m.s1.String() + m.s2.String() + m.promo.String()
-	result = strings.Replace(result, "=", "", -1)
+	//result = strings.Replace(result, "=", "", -1)
 	return result + m.Comment
 
 }

@@ -154,10 +154,10 @@ func (_ AlgebraicNotation) IncorrectEncode(pos *Position, m *Move) string {
 
 // Decode implements the Decoder interface.
 func (_ AlgebraicNotation) Decode(pos *Position, s string) (*Move, error) {
-	s = removeSubstrings(s, "?", "!", "+", "#", "e.p.", "=")
+	s = removeSubstrings(s, "?", "!", "+", "#", "e.p.")
 	for _, m := range pos.ValidMoves() {
 		str := AlgebraicNotation{}.Encode(pos, m)
-		str = removeSubstrings(str, "?", "!", "+", "#", "e.p.", "=")
+		str = removeSubstrings(str, "?", "!", "+", "#", "e.p.")
 		if str == s {
 			return m, nil
 		}
@@ -165,7 +165,7 @@ func (_ AlgebraicNotation) Decode(pos *Position, s string) (*Move, error) {
 		// Some PGNs have incorrect algebraic notation, let's accept them
 		// so that we can be generous.
 		str2 := AlgebraicNotation{}.IncorrectEncode(pos, m)
-		str2 = removeSubstrings(str2, "?", "!", "+", "#", "e.p.", "=")
+		str2 = removeSubstrings(str2, "?", "!", "+", "#", "e.p.")
 		if str2 == s {
 			return m, nil
 		}
@@ -244,9 +244,9 @@ func formS1(pos *Position, m *Move) string {
 
 func charForPromo(p PieceType) string {
 	c := charFromPieceType(p)
-	//if c != "" {
-	//c = "=" + c
-	//}
+	if c != "" {
+		c = "=" + c
+	}
 	return c
 }
 
