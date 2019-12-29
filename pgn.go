@@ -13,6 +13,45 @@ import (
 // reader.  It is designed to be used decoding multiple PGNs
 // in the same file.  An error is returned if there is an
 // issue parsing the PGNs.
+func GamesFromPgnNoError(r io.Reader) ([]*Game, error) {
+	games := []*Game{}
+	current := ""
+	count := 0
+	totalCount := 0
+	br := bufio.NewReader(r)
+	for {
+		line, err := br.ReadString('\n')
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		if strings.TrimSpace(line) == "" {
+			count++
+		} else {
+			current += line
+		}
+		if count == 2 {
+			game, err := decodePGN(current)
+			if err != nil {
+				// Ignore error games.
+				continue
+				//return nil, err
+			}
+			games = append(games, game)
+			count = 0
+			current = ""
+			totalCount++
+			log.Println("Processed game", totalCount)
+		}
+	}
+	return games, nil
+}
+
+// GamesFromPGN returns all PGN decoding games from the
+// reader.  It is designed to be used decoding multiple PGNs
+// in the same file.  An error is returned if there is an
+// issue parsing the PGNs.
 func GamesFromPGN(r io.Reader) ([]*Game, error) {
 	games := []*Game{}
 	current := ""
